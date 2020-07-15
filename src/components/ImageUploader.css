@@ -1,0 +1,22 @@
+.imageUploader {
+	display: flex;
+	flex-direction: column;
+	width: 60%;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	/* position: fixed; */
+	bottom: 0;
+	background-color: white;
+	border-top: 1px solid lightgray;
+}
+
+.input_field {
+	padding: 4px;
+}
+
+.progress_bar {
+	margin: 2px;
+	width: 60%;
+}
