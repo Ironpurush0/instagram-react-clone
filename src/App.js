@@ -100,7 +100,7 @@ function App() {
 	}, []);
 
 	return (
-		<div className="App">
+		<div className="app">
 			<Modal
 				open={isOpen}
 				onClose={() => setIsOpen(false)}
@@ -197,10 +197,12 @@ function App() {
 				)}
 			</div>
 			</div>
-
+			<div className="app__post">
 			{posts.map(({ id, post }) => (
-				<Post key={id} username={post.username} caption={post.caption} imageUrl={post.imageUrl} />
+				<Post key={id} postId={id} username={post.username} user={user} caption={post.caption} imageUrl={post.imageUrl} />
 			))}
+			</div>
+			
 			{/* Posts */}
 			{user?.displayName ? <ImageUploader username={user.displayName} /> : <h3>Sorry you need to login.</h3>  }
 			
