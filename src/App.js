@@ -116,6 +116,7 @@ function App() {
 								alt="instagram"
 							/>
 						</center>
+						<ImageUploader />
 						<Input
 							placeholder="username"
 							type="text"
@@ -187,7 +188,10 @@ function App() {
 				/>
 				<div className="auth_buttons">
 					{user ? (
+						<React.Fragment>
+						<p>{user.displayName}</p>
 						<Button onClick={() => auth.signOut()}>Sign out</Button>
+						</React.Fragment>
 					) : (
 						<div className="app__authContainer">
 							<Button onClick={() => setIsOpen(true)}>Sign up</Button>

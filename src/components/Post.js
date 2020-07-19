@@ -77,18 +77,20 @@ const Post = ({ postId, user, username, imageUrl, caption }) => {
 				))}
 			</div>
 
-			<form className="post__commentBox">
-				<input
-					className="post__input"
-					type="text"
-					placeholder="comment..."
-					value={comment}
-					onChange={(e) => setComment(e.target.value)}
-				/>
-				<button className="post__button" disabled={!comment} type="submit" onClick={PostComment}>
-					Post
-				</button>
-			</form>
+			{user && (
+				<form className="post__commentBox">
+					<input
+						className="post__input"
+						type="text"
+						placeholder="comment..."
+						value={comment}
+						onChange={(e) => setComment(e.target.value)}
+					/>
+					<button className="post__button" disabled={!comment} type="submit" onClick={PostComment}>
+						Post
+					</button>
+				</form>
+			)}
 		</div>
 	);
 };
