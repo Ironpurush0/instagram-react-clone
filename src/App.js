@@ -215,7 +215,7 @@ function App() {
 			</div>
 
 			{/* Posts */}
-			{user?.displayName ? <ImageUploader username={user.displayName} /> : <h3>Sorry you need to login.</h3>}
+			{user?.displayName && <ImageUploader username={user.displayName} />}
 		</div>
 	);
 }
