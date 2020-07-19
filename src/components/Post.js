@@ -9,6 +9,8 @@ const Post = ({ postId, user, username, imageUrl, caption }) => {
 	const [ comments, setComments ] = useState([]);
 	const [ comment, setComment ] = useState('');
 
+	const [ like, setLike ] = useState(0);
+
 	useEffect(
 		() => {
 			let unsubscribe;
@@ -18,8 +20,8 @@ const Post = ({ postId, user, username, imageUrl, caption }) => {
 					.doc(postId)
 					.collection('comments')
 					.orderBy('timestamp', 'desc')
-					.onSnapshot((snapshot) => {
-						setComments(snapshot.docs.map((doc) => doc.data()));
+					.onSnapshot((doc) => {
+						setComments(doc.docs.map((doc) => doc.data()));
 					});
 			}
 			return () => {
@@ -29,13 +31,13 @@ const Post = ({ postId, user, username, imageUrl, caption }) => {
 		[ postId ]
 	);
 
-	const postComment = (event) => {
+	const PostComment = (event) => {
 		event.preventDefault();
 
 		db.collection('Post').doc(postId).collection('comments').add({
 			text: comment,
 			username: user.displayName,
-			timeStamp: firebase.firestore.FieldValue.serverTimestamp()
+			timestamp: firebase.firestore.FieldValue.serverTimestamp()
 		});
 		setComment('');
 	};
@@ -56,15 +58,23 @@ const Post = ({ postId, user, username, imageUrl, caption }) => {
 				<strong>{username}</strong> {caption}
 			</h4>
 
+			<div className="post__likes">
+				<img
+					className="heart__Image"
+					src="https://image.flaticon.com/icons/svg/833/833472.svg"
+					alt="heart"
+					onClick={() => setLike(like + 1)}
+				/>
+				<p>{like}</p>
+			</div>
+
 			<div className="post__comments">
-				{comments.map((comment) => {
-					return (
-						<h4>
-							<strong>{comment.username}</strong>
-							{comment.text}
-						</h4>
-					);
-				})}
+				{comments.map((comment) => (
+					<p className="comment">
+						<b className="username">{comment.username}</b>
+						{comment.text}
+					</p>
+				))}
 			</div>
 
 			<form className="post__commentBox">
@@ -75,7 +85,7 @@ const Post = ({ postId, user, username, imageUrl, caption }) => {
 					value={comment}
 					onChange={(e) => setComment(e.target.value)}
 				/>
-				<button className="post__button" disabled={!comment} type="submit" onClick={postComment}>
+				<button className="post__button" disabled={!comment} type="submit" onClick={PostComment}>
 					Post
 				</button>
 			</form>

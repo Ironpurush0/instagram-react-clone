@@ -187,25 +187,31 @@ function App() {
 				/>
 				<div className="auth_buttons">
 					{user ? (
-					<Button onClick={() => auth.signOut()}>Sign out</Button>
-				) : (
-					<div className="app__authContainer">
-						<Button onClick={() => setIsOpen(true)}>Sign up</Button>
+						<Button onClick={() => auth.signOut()}>Sign out</Button>
+					) : (
+						<div className="app__authContainer">
+							<Button onClick={() => setIsOpen(true)}>Sign up</Button>
 
-						<Button onClick={() => setSigninOpen(true)}>Sign in</Button>
-					</div>
-				)}
-			</div>
+							<Button onClick={() => setSigninOpen(true)}>Sign in</Button>
+						</div>
+					)}
+				</div>
 			</div>
 			<div className="app__post">
-			{posts.map(({ id, post }) => (
-				<Post key={id} postId={id} username={post.username} user={user} caption={post.caption} imageUrl={post.imageUrl} />
-			))}
+				{posts.map(({ id, post }) => (
+					<Post
+						key={id}
+						user={user}
+						postId={id}
+						username={post.username}
+						caption={post.caption}
+						imageUrl={post.imageUrl}
+					/>
+				))}
 			</div>
-			
+
 			{/* Posts */}
-			{user?.displayName ? <ImageUploader username={user.displayName} /> : <h3>Sorry you need to login.</h3>  }
-			
+			{user?.displayName ? <ImageUploader username={user.displayName} /> : <h3>Sorry you need to login.</h3>}
 		</div>
 	);
 }

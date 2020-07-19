@@ -40,6 +40,16 @@
 
 .post__comments {
 	padding: 10px;
+	margin-top: 10px;
+	border-top: 1px solid lightgray;
+}
+
+.comment {
+	margin-top: 5px;
+}
+
+.username {
+	margin-right: 7px;
 }
 
 .post__button {
@@ -47,4 +57,21 @@
 	border: none;
 	color: #6082a3;
 	background-color: transparent;
+}
+
+.post__likes {
+	display: flex;
+	/* margin: 10px; */
+	padding-left: 10px;
+	margin-top: 7px;
+	margin-bottom: 10px;
+}
+
+.heart__Image {
+	width: 25px;
+	height: 25px;
+}
+
+.likes {
+	margin-left: 7px;
 }
