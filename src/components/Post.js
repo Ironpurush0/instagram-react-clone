@@ -5,10 +5,11 @@ import firebase from 'firebase';
 
 import './Post.css';
 
-const Post = ({ postId, user, username, imageUrl, caption }) => {
+const Post = ({ postId, user, profileImage, username, imageUrl, caption }) => {
 	const [ comments, setComments ] = useState([]);
 	const [ comment, setComment ] = useState('');
 
+	// const [likes, setLikes] = useState([])
 	const [ like, setLike ] = useState(0);
 
 	useEffect(
@@ -42,14 +43,14 @@ const Post = ({ postId, user, username, imageUrl, caption }) => {
 		setComment('');
 	};
 
+	const incrementLikes = () => {
+		setLike(like + 1)
+	};
+
 	return (
 		<div className="post">
 			<div className="post__header">
-				<Avatar
-					className="post__avatar"
-					alt="Witcher"
-					src="https://images.pexels.com/photos/2899097/pexels-photo-2899097.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"
-				/>
+				<Avatar className="post__avatar" alt="Witcher" src={profileImage} />
 				<h2>{username}</h2>
 			</div>
 			<img src={imageUrl} alt="witcher" className="post__image" />
@@ -63,9 +64,9 @@ const Post = ({ postId, user, username, imageUrl, caption }) => {
 					className="heart__Image"
 					src="https://image.flaticon.com/icons/svg/833/833472.svg"
 					alt="heart"
-					onClick={() => setLike(like + 1)}
+					onClick={incrementLikes}
 				/>
-				<p>{like}</p>
+				<p>{like.LikesCount}</p>
 			</div>
 
 			<div className="post__comments">

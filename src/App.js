@@ -4,8 +4,11 @@ import Post from './components/Post';
 import { db, auth } from './backend/firebase';
 import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
-import { Button, Input } from '@material-ui/core';
-import ImageUploader from './components/ImageUploader';
+import { Button, Input, Avatar } from '@material-ui/core';
+import ProfielPIcUploader from './components/ProfilePIcUploader'
+import ImageUploader from './components/ImageUploader'
+import {BrowserRouter as Router, Route, Switch} from 'react-router-dom'
+
 
 function getModalStyle() {
 	const top = 50;
@@ -29,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
 	}
 }));
 
-function App() {
+function App({profileImage}) {
 	const classes = useStyles();
 
 	const [ modalStyle ] = React.useState(getModalStyle);
@@ -49,7 +52,8 @@ function App() {
 			.createUserWithEmailAndPassword(email, password)
 			.then((user) => {
 				return user.user.updateProfile({
-					displayName: username
+					displayName: username,
+					photoURL: profileImage
 				});
 			})
 			.catch((error) => alert(error.message));
@@ -74,8 +78,8 @@ function App() {
 		() => {
 			const unsubscribe = auth.onAuthStateChanged((user) => {
 				if (user) {
-					console.log(user);
 					setUser(user);
+					console.log(user);
 				} else {
 					setUser(null);
 				}
@@ -116,7 +120,7 @@ function App() {
 								alt="instagram"
 							/>
 						</center>
-						<ImageUploader />
+						<ProfielPIcUploader />
 						<Input
 							placeholder="username"
 							type="text"
@@ -189,6 +193,7 @@ function App() {
 				<div className="auth_buttons">
 					{user ? (
 						<React.Fragment>
+							<Avatar className="post__avatar" alt="Witcher" src={profileImage} />
 						<p>{user.displayName}</p>
 						<Button onClick={() => auth.signOut()}>Sign out</Button>
 						</React.Fragment>
@@ -207,6 +212,7 @@ function App() {
 						key={id}
 						user={user}
 						postId={id}
+						profileImage={post.profileImage}
 						username={post.username}
 						caption={post.caption}
 						imageUrl={post.imageUrl}
@@ -215,7 +221,7 @@ function App() {
 			</div>
 
 			{/* Posts */}
-			{user?.displayName && <ImageUploader username={user.displayName} />}
+			{user?.displayName ? <ImageUploader username={user.displayName} /> : "sorry login first"}
 		</div>
 	);
 }
