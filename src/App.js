@@ -1,13 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
 import Post from './components/Post';
-import { db, auth } from './backend/firebase';
+import { db, auth, storage } from './backend/firebase';
 import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 import { Button, Input, Avatar } from '@material-ui/core';
-import ProfielPIcUploader from './components/ProfilePIcUploader'
 import ImageUploader from './components/ImageUploader'
-import {BrowserRouter as Router, Route, Switch} from 'react-router-dom'
 
 
 function getModalStyle() {
@@ -32,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
 	}
 }));
 
-function App({profileImage}) {
+function App() {
 	const classes = useStyles();
 
 	const [ modalStyle ] = React.useState(getModalStyle);
@@ -53,11 +51,11 @@ function App({profileImage}) {
 			.then((user) => {
 				return user.user.updateProfile({
 					displayName: username,
-					photoURL: profileImage
 				});
 			})
 			.catch((error) => alert(error.message));
 
+			
 		setIsOpen(false);
 		setUsername('');
 		setEmail('');
@@ -120,7 +118,6 @@ function App({profileImage}) {
 								alt="instagram"
 							/>
 						</center>
-						<ProfielPIcUploader />
 						<Input
 							placeholder="username"
 							type="text"
@@ -192,11 +189,13 @@ function App({profileImage}) {
 				/>
 				<div className="auth_buttons">
 					{user ? (
-						<React.Fragment>
-							<Avatar className="post__avatar" alt="Witcher" src={profileImage} />
-						<p>{user.displayName}</p>
+						<div className="header-section">
+							<Avatar alt={user.displayName} src />
+							<div>
+							<p className="loginusername">{user.displayName}</p>
 						<Button onClick={() => auth.signOut()}>Sign out</Button>
-						</React.Fragment>
+							</div>
+						</div>
 					) : (
 						<div className="app__authContainer">
 							<Button onClick={() => setIsOpen(true)}>Sign up</Button>

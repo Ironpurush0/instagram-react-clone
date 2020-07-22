@@ -9,9 +9,6 @@ const Post = ({ postId, user, profileImage, username, imageUrl, caption }) => {
 	const [ comments, setComments ] = useState([]);
 	const [ comment, setComment ] = useState('');
 
-	// const [likes, setLikes] = useState([])
-	const [ like, setLike ] = useState(0);
-
 	useEffect(
 		() => {
 			let unsubscribe;
@@ -43,14 +40,10 @@ const Post = ({ postId, user, profileImage, username, imageUrl, caption }) => {
 		setComment('');
 	};
 
-	const incrementLikes = () => {
-		setLike(like + 1)
-	};
-
 	return (
 		<div className="post">
 			<div className="post__header">
-				<Avatar className="post__avatar" alt="Witcher" src={profileImage} />
+				<Avatar className="post__avatar" alt={username} src />
 				<h2>{username}</h2>
 			</div>
 			<img src={imageUrl} alt="witcher" className="post__image" />
@@ -58,16 +51,6 @@ const Post = ({ postId, user, profileImage, username, imageUrl, caption }) => {
 			<h4 className="post__text">
 				<strong>{username}</strong> {caption}
 			</h4>
-
-			<div className="post__likes">
-				<img
-					className="heart__Image"
-					src="https://image.flaticon.com/icons/svg/833/833472.svg"
-					alt="heart"
-					onClick={incrementLikes}
-				/>
-				<p>{like.LikesCount}</p>
-			</div>
 
 			<div className="post__comments">
 				{comments.map((comment) => (
